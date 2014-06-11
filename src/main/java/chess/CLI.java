@@ -3,6 +3,8 @@ package chess;
 import chess.pieces.Piece;
 
 import java.io.*;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * This class provides the basic CLI interface to the Chess game.
@@ -64,7 +66,8 @@ public class CLI {
                 } else if (input.equals("board")) {
                     writeOutput("Current Game:");
                 } else if (input.equals("list")) {
-                    writeOutput("====> List Is Not Implemented (yet) <====");
+                	listAllPossibleMoves();
+//                    writeOutput("====> List Is Not Implemented (yet) <====");
                 } else if (input.startsWith("move")) {
                     writeOutput("====> Move Is Not Implemented (yet) <====");
                 } else {
@@ -74,6 +77,23 @@ public class CLI {
         }
     }
 
+    /**
+     * List each piece all possible moves on the board by current player
+     */
+    private void listAllPossibleMoves(){
+    	Map<Position, Piece> map = gameState.getCurrentPlayerPositionMap();
+    	Set<Position> set = null;
+    	writeOutput(gameState.getCurrentPlayer() + "'s Possible Moves:");
+    	
+    	for (Map.Entry<Position, Piece> entry: map.entrySet() ){
+    		set = entry.getValue().listAllPosssibleMoves(entry.getKey(), gameState);
+    		for (Position pos: set){
+    			writeOutput(entry.getKey().toString() + " " + pos.toString());
+    		}
+    	}
+    	
+    	
+    }
     private void doNewGame() {
         gameState = new GameState();
         gameState.reset();

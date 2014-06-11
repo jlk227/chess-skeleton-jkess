@@ -101,4 +101,18 @@ public class GameState {
     private void placePiece(Piece piece, Position position) {
         positionToPieceMap.put(position, piece);
     }
+    
+    /**
+     * Get a map of <position, piece> for current player
+     * @return map
+     */
+    public Map<Position, Piece> getCurrentPlayerPositionMap(){
+    	
+    	Map<Position, Piece> map =new HashMap<Position, Piece>();
+    	for (Map.Entry<Position, Piece> entry: positionToPieceMap.entrySet()){
+    		if (entry.getValue().getOwner().equals(currentPlayer))
+    			map.put(entry.getKey(), entry.getValue());
+    	}
+    	return map;
+    }
 }
